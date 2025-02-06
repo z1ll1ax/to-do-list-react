@@ -1,0 +1,48 @@
+@import "../../Global.scss";
+
+$search-bar-width: 25rem;
+$search-btn-width: 2.5rem;
+
+.search-bar {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    width: calc($search-bar-width + $search-btn-width);
+}
+
+.input {
+    width: $search-bar-width;
+    height: $search-btn-width;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: $primary-font;
+    padding-left: 1rem;
+}
+
+.input-btn {
+    width: $search-btn-width;
+    height: $search-btn-width;
+    background: none;
+    border: none;
+    &__pic {
+
+    }
+}
+
+.input-clear {
+    position: absolute;
+    right: $search-btn-width;
+    &__pic {
+
+    }
+}
+
+.input-search {
+    &__pic {
+
+    }
+}

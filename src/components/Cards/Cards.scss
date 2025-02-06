@@ -1,0 +1,11 @@
+@import '../../Global.scss';
+
+$card-width: 27rem;
+$card-description-line-count-shown: 7;
+
+.cards {
+    margin: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 3rem;
+}
