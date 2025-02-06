@@ -35,14 +35,20 @@ $search-btn-width: 2.5rem;
 
 .input-clear {
     position: absolute;
-    right: $search-btn-width;
+    right: calc($search-btn-width - 1rem);
     &__pic {
-
+        
     }
 }
 
-.input-search {
-    &__pic {
-
+@media (max-width: 30rem) {
+    .search-bar {
+        width: 100vw;
+    }
+    .input {
+        width: 90vw;
+    }
+    .input-clear {
+        right: 5vw;
     }
 }
