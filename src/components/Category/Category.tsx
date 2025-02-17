@@ -1,38 +1,55 @@
 import './Category.scss'
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import CategoryType from '../../types/Category';
 
 const Category:FC<CategoryType> = (
-    {name, color, usable}
+    {
+        id,
+        name,
+        color,
+        setIsModalShown,
+        setIsModalCategoryEditing,
+        setCategoryColorChosen,
+        setInputCategoryName,
+        setRedactId
+    }
 ) => {
-  function getClassFromColor(){
+
+    const handleContextMenu = (event: React.SyntheticEvent) => {
+        if (!setIsModalCategoryEditing || !setIsModalShown) return;
+        event.preventDefault();
+        setIsModalCategoryEditing(true);
+        setIsModalShown(true);
+        if (setInputCategoryName && name) setInputCategoryName(name);
+        if (setCategoryColorChosen && color) setCategoryColorChosen(color);
+        if(setRedactId) {
+            setRedactId(id);
+        }
+    }
+
+  const getClassFromColor = () => {
     switch (color) {
-        case 'blue':
+        case 'Blue':
             return 'primary';
-        case 'green':
+        case 'Green':
             return 'success';
-        case 'gray':
+        case 'Gray':
             return 'secondary';
-        case 'red':
+        case 'Red':
             return 'danger';
-        case 'yellow':
+        case 'Yellow':
             return 'warning';
-        case 'lightblue':
+        case 'Light Blue':
             return 'info';
     }
-    return 'dark'
+    return 'dark';
   }
-  let categoryClass =
-    usable
-        ? `category btn btn-outline-${getClassFromColor()}`
-        : `category-card btn btn-outline-${getClassFromColor()}`;
+ 
   return (
     <>
-        {
-            usable
-            ? <button className={categoryClass}>{name}</button>
-            : <span className={categoryClass}>{name}</span>
-        }
+        <button className={`category btn btn-outline-${getClassFromColor()}`}
+                onContextMenu={handleContextMenu}>
+                    {name}</button>
     </>
   )
 }

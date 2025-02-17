@@ -1,7 +1,7 @@
 import './Card.scss'
 import {FC} from 'react'
 import CardProps from '../../interfaces/CardProps';
-import Category from '../Category/Category';
+import CategoryInfo from '../Category/CategoryInfo';
 
 const Card:FC<CardProps> = (
     {
@@ -19,7 +19,11 @@ const Card:FC<CardProps> = (
             <div className='card-footer'>
                 <div className='card-categories'>
                     {categories?.length
-                        ? categories.map((item) => <Category name={item.name} color={item.color}></Category>)
+                        ? categories.map((item, index) =>
+                            <CategoryInfo key={index}
+                                name={item.name}
+                                color={item.color}
+                                isInteractive={false}></CategoryInfo>)
                         : null}
                 </div>
                 <div className='card-dates-container'>
