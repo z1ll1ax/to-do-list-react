@@ -5,7 +5,7 @@ interface CardProps {
     description?: string;
     createDate?: string;
     deadlineDate?: string;
-    categories?: Category[];
+    categories?: string[];
 }
 
 export default CardProps;

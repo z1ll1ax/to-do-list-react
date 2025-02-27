@@ -18,13 +18,14 @@ const Card:FC<CardProps> = (
             <p className="card-text card-description">{description}</p>
             <div className='card-footer'>
                 <div className='card-categories'>
-                    {categories?.length
+                    {/* {categories?.length
                         ? categories.map((item, index) =>
                             <CategoryInfo key={index}
                                 name={item.name}
                                 color={item.color}
-                                isInteractive={false}></CategoryInfo>)
-                        : null}
+                                isBigSize={false}
+                            ></CategoryInfo>)
+                        : null} */}
                 </div>
                 <div className='card-dates-container'>
                     <p className="card-text"><small><i>Created {createDate}</i></small></p>

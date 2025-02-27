@@ -4,8 +4,10 @@ import './Categories.scss'
 
 interface CategoriesProps {
   categories: Array<CategoryType>;
-  setIsModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalCategoryShown: React.Dispatch<React.SetStateAction<boolean>>;
   setIsModalCategoryEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalCardShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalCardEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setCategoryColorChosen?: React.Dispatch<React.SetStateAction<string>>;
   setInputCategoryName?: React.Dispatch<React.SetStateAction<string>>;
   setRedactId?: React.Dispatch<React.SetStateAction<string>>;
@@ -13,8 +15,10 @@ interface CategoriesProps {
 
 const Categories: React.FC<CategoriesProps> = ({
     categories,
-    setIsModalShown,
+    setIsModalCategoryShown,
     setIsModalCategoryEditing,
+    setIsModalCardShown,
+    setIsModalCardEditing,
     setCategoryColorChosen,
     setInputCategoryName,
     setRedactId
@@ -24,11 +28,16 @@ const Categories: React.FC<CategoriesProps> = ({
   const handleNewCategory = function(): void {
     if(setInputCategoryName) setInputCategoryName('');
     if(setCategoryColorChosen) setCategoryColorChosen('Red');
-    setIsModalShown(true);
+    setIsModalCategoryShown(true);
     setIsModalCategoryEditing(false);
     if(setRedactId) setRedactId('-1');
   }
   
+  const handleNewCard = function(): void {
+    setIsModalCardShown(true);
+    setIsModalCardEditing(false);
+  }
+
   return (
     <div className='category-menu'>
       <button className='btn btn-primary category-add-btn'
@@ -43,7 +52,7 @@ const Categories: React.FC<CategoriesProps> = ({
             name={item.name}
             color={item.color}
             usable={true}
-            setIsModalShown = {setIsModalShown}
+            setIsModalShown = {setIsModalCategoryShown}
             setIsModalCategoryEditing = {setIsModalCategoryEditing}
             setCategoryColorChosen = {setCategoryColorChosen}
             setInputCategoryName = {setInputCategoryName}
@@ -51,6 +60,8 @@ const Categories: React.FC<CategoriesProps> = ({
           </Category>)
           : null}
       </div>
+      <button className='btn btn-outline-primary card-add-btn'
+        onClick={handleNewCard}>New Card...</button>
     </div>
   )
 }

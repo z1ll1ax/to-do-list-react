@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './Modals.scss';
 import CategoryInfo from '../Category/CategoryInfo';
 import CategoryType from '../../types/Category';
@@ -131,7 +130,7 @@ const ModalCard: React.FC<CategoriesProps> = (
                                 onClick={function(){setColorChosen('Gray')}}>Gray</button>
                     </div>
                     <div>
-                        <p className='color-label'>Color chosen: <CategoryInfo name={inputName ? inputName : 'Your category name'} color={colorChosen} isInteractive={true}></CategoryInfo></p>
+                        <p className='color-label'>Color chosen: <CategoryInfo name={inputName ? inputName : 'Your category name'} color={colorChosen} isBigSize={true}></CategoryInfo></p>
                     </div>
                 </div>
                 <div className="modal-footer">

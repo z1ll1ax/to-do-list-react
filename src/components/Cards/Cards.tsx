@@ -1,21 +1,28 @@
 import Card from '../Card/Card';
+import CardsProps from '../../interfaces/CardProps';
 import './Cards.scss'
 
-function Cards() {
+interface CardsContainerProps {
+    cards: CardsProps[];
+}
+
+const Cards:React.FC<CardsContainerProps> = (
+    {
+        cards,
+    }
+) => {
     return (
         <div className="cards">
-            <Card
-                title='Make this task'
-                description='Learn React Basics and make full functionality for the task'
-                createDate='05.02.2025'
-                deadlineDate='09.02.2025'
-                categories={[{id: '123', name: 'Job', color: 'Red'}, {id: '321', name: 'Hobby', color: 'Green'}]}/>
-            <Card
-                title='Make the search bar work'
-                description='it is in the top corner'
-                createDate='06.02.2025'
-                deadlineDate='09.02.2025'
-            />
+            {cards?.length
+                ? cards.map((item, index) =>
+                <Card
+                    key={index}
+                    title={item.title}
+                    description={item.description}
+                    createDate={item.createDate}
+                    deadlineDate={item.deadlineDate}
+                ></Card>)
+                : null}
         </div>
     )
 }

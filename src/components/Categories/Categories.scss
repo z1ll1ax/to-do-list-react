@@ -1,5 +1,6 @@
 .category-menu {
     display: flex;
+    justify-content: space-between;
     gap: 5rem;
     margin: 2rem;
 }
@@ -11,6 +12,12 @@
 }
 
 .category-add-btn {
+    min-width: 10rem;
+    max-height: 2.75rem;
+}
+
+.card-add-btn {
+    align-self: flex-end;
     min-width: 10rem;
     max-height: 2.75rem;
 }

@@ -1,16 +1,20 @@
 import './Category.scss'
 
 interface CategoryInfoProps {
+    id?: string;
     name?: string;
     color?: string;
-    isInteractive?: boolean;
+    isBigSize?: boolean;
+    isClickable?: boolean;
 }
 
 const CategoryInfo: React.FC<CategoryInfoProps> = (
     {
+        id,
         name,
         color,
-        isInteractive,
+        isBigSize,
+        isClickable
     }
 ) => {
   const getClassFromColor = () => {
@@ -33,7 +37,7 @@ const CategoryInfo: React.FC<CategoryInfoProps> = (
     return (
         <>
         {
-            isInteractive
+            isBigSize
             ? <button className={`category btn btn-outline-${getClassFromColor()}`}>{name}</button>
             : <span className={`category-card btn btn-outline-${getClassFromColor()}`}>{name}</span>
         }
