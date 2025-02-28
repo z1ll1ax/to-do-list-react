@@ -7,14 +7,77 @@ const Category:FC<CategoryType> = (
         id,
         name,
         color,
+        usable,
+        usableForCreation,
         setIsModalShown,
         setIsModalCategoryEditing,
         setCategoryColorChosen,
         setInputCategoryName,
-        setRedactId
+        setRedactId,
+        selectedCategories,
+        setSelectedCategories,
+        selectedCategoriesInCreation,
+        setSelectedCategoriesInCreation
     }
 ) => {
-
+    const [active, setActive] = useState(() => {
+        if (setSelectedCategories) {
+            let categories = selectedCategories;
+            let sorted = categories?.filter((item) => item === id);
+            if (sorted && categories && sorted?.length !== 0) {
+                return true;
+            }
+        }
+        else if (setSelectedCategoriesInCreation) {
+            let categories = selectedCategoriesInCreation;
+            let sorted = categories?.filter((item) => item === id);
+            if (sorted && categories && sorted?.length !== 0) {
+                return true;
+            }
+        }
+        else return false;
+    });
+    const handleClick = () => {
+        setActive(!active);
+        if (usable) {
+            if (active) {
+                let categories = selectedCategories;
+                let sorted = categories?.filter((item) => item === id);
+                if (sorted && categories && sorted?.length !== 0) {
+                    categories = categories?.filter((item) => item !== id);
+                    if (setSelectedCategories) setSelectedCategories(categories);
+                }
+            }
+            else {
+                let categories = selectedCategories;
+                let sorted = categories?.filter((item) => item === id);
+                if (categories && sorted?.length === 0) {
+                    categories?.push(id);
+                    if (setSelectedCategories) setSelectedCategories(categories);
+                }
+            }
+        }
+        else if (usableForCreation) {
+            if (active) {
+                let categories = selectedCategoriesInCreation;
+                let sorted = categories?.filter((item) => item === id);
+                if (sorted && categories && sorted?.length !== 0) {
+                    categories = categories?.filter((item) => item !== id);
+                    if (setSelectedCategoriesInCreation) setSelectedCategoriesInCreation(categories);
+                    console.log(categories);
+                }
+            }
+            else {
+                let categories = selectedCategoriesInCreation;
+                let sorted = categories?.filter((item) => item === id);
+                if (categories && sorted?.length === 0) {
+                    categories?.push(id);
+                    if (setSelectedCategoriesInCreation) setSelectedCategoriesInCreation(categories);
+                    console.log(categories);
+                }
+            }
+        }
+    }
     const handleContextMenu = (event: React.SyntheticEvent) => {
         if (!setIsModalCategoryEditing || !setIsModalShown) return;
         event.preventDefault();
@@ -27,6 +90,10 @@ const Category:FC<CategoryType> = (
         }
     }
 
+  const getStyleIfActive = () => {
+    if (active) return '';
+    return'-outline';
+  };
   const getClassFromColor = () => {
     switch (color) {
         case 'Blue':
@@ -47,8 +114,9 @@ const Category:FC<CategoryType> = (
  
   return (
     <>
-        <button className={`category btn btn-outline-${getClassFromColor()}`}
-                onContextMenu={handleContextMenu}>
+        <button className={`category btn btn${getStyleIfActive()}-${getClassFromColor()}`}
+                onContextMenu={handleContextMenu}
+                onClick={handleClick}>
                     {name}</button>
     </>
   )

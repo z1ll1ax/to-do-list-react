@@ -1,5 +1,3 @@
-import Category from '../types/Category';
-
 interface CardProps {
     title?: string;
     description?: string;

@@ -11,6 +11,8 @@ interface CategoriesProps {
   setCategoryColorChosen?: React.Dispatch<React.SetStateAction<string>>;
   setInputCategoryName?: React.Dispatch<React.SetStateAction<string>>;
   setRedactId?: React.Dispatch<React.SetStateAction<string>>;
+  selectedCategories?: string[];
+  setSelectedCategories?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const Categories: React.FC<CategoriesProps> = ({
@@ -21,7 +23,9 @@ const Categories: React.FC<CategoriesProps> = ({
     setIsModalCardEditing,
     setCategoryColorChosen,
     setInputCategoryName,
-    setRedactId
+    setRedactId,
+    selectedCategories,
+    setSelectedCategories
   }
 ) => {
   
@@ -56,8 +60,10 @@ const Categories: React.FC<CategoriesProps> = ({
             setIsModalCategoryEditing = {setIsModalCategoryEditing}
             setCategoryColorChosen = {setCategoryColorChosen}
             setInputCategoryName = {setInputCategoryName}
-            setRedactId = {setRedactId}>
-          </Category>)
+            setRedactId = {setRedactId}
+            selectedCategories = {selectedCategories}
+            setSelectedCategories = {setSelectedCategories}
+          ></Category>)
           : null}
       </div>
       <button className='btn btn-outline-primary card-add-btn'

@@ -1,7 +1,7 @@
 import CardProps from '../../interfaces/CardProps';
 import CardType from '../Card/Card';
 import CategoryType from '../../types/Category';
-import CategoryInfo from '../../components/Category/CategoryInfo';
+import Category from '../../components/Category/Category';
 import './Modals.scss';
 
 interface CardsProps {
@@ -15,6 +15,8 @@ interface CardsProps {
     setInputDeadlineName: React.Dispatch<React.SetStateAction<string>>;
     inputTextAreaName: string;
     setInputTextAreaName: React.Dispatch<React.SetStateAction<string>>;
+    selectedCategoriesInCreation: string[];
+    setSelectedCategoriesInCreation: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const ModalCard: React.FC<CardsProps> = (
@@ -28,7 +30,9 @@ const ModalCard: React.FC<CardsProps> = (
         inputDeadlineName,
         setInputDeadlineName,
         inputTextAreaName,
-        setInputTextAreaName
+        setInputTextAreaName,
+        selectedCategoriesInCreation,
+        setSelectedCategoriesInCreation
     }) => {
     const getTodayDateFormatted = function(): string {
         const today = new Date();
@@ -65,7 +69,8 @@ const ModalCard: React.FC<CardsProps> = (
             title: inputName,
             createDate: getTodayDateFormatted(),
             deadlineDate: getDeadlineDateFormatted(inputDeadlineName),
-            description: inputTextAreaName
+            description: inputTextAreaName,
+            categories: selectedCategoriesInCreation,
         };
         cards.push(newCard);
         localStorage.setItem('cards', JSON.stringify(cards));
@@ -154,14 +159,15 @@ const ModalCard: React.FC<CardsProps> = (
                     <div className="btn-group category-group" role="group">
                     {categories?.length
                         ? categories.map((item, index) =>
-                        <CategoryInfo
+                        <Category
                             id={item.id}
                             key={index}
                             name={item.name}
                             color={item.color}
-                            isBigSize={true}
-                            isClickable={true}
-                        ></CategoryInfo>)
+                            usableForCreation={true}
+                            selectedCategoriesInCreation={selectedCategoriesInCreation}
+                            setSelectedCategoriesInCreation={setSelectedCategoriesInCreation}
+                        ></Category>)
                         : null}
                     </div>
                     {/* <div>

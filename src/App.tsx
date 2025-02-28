@@ -19,6 +19,7 @@ function App() {
   const [inputCardTextAreaName, setInputCardTextAreaName] = useState('');
   const [inputCardDeadlineName, setInputCardDeadlineName] = useState('');
   const [redactId, setRedactId] = useState('-1');
+  const [selectedCategoriesInCreation, setSelectedCategoriesInCreation] = useState(Array());
   const [categories, setCategories] = useState(() => {
     let localStorageCategories : string | null = localStorage.getItem('categories');
     if (!localStorageCategories){
@@ -41,6 +42,17 @@ function App() {
       return cardsTemp;
     }
   });
+  const [selectedCategories, setSelectedCategories] = useState(() => {
+    let localStorageSelected : string | null = localStorage.getItem('selected-categories');
+    if (!localStorageSelected){
+      return [];
+    }
+    else {
+      let categoriesTemp: Array<string> = JSON.parse(localStorageSelected);
+      if (!categoriesTemp || categoriesTemp.length === 0) return [];
+      return categoriesTemp;
+    }
+  });
 
   return (
     <>
@@ -54,9 +66,13 @@ function App() {
         setCategoryColorChosen = {setCategoryColorChosen}
         setInputCategoryName = {setInputCategoryName}
         setRedactId = {setRedactId}
+        selectedCategories = {selectedCategories}
+        setSelectedCategories = {setSelectedCategories}
       />
       <Cards
         cards={cards}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
       />
       {isModalCategoryShown && !isModalCardShown &&
         <ModalCategory
@@ -81,6 +97,8 @@ function App() {
           setInputDeadlineName = {setInputCardDeadlineName}
           inputTextAreaName = {inputCardTextAreaName}
           setInputTextAreaName = {setInputCardTextAreaName}
+          selectedCategoriesInCreation = {selectedCategoriesInCreation}
+          setSelectedCategoriesInCreation = {setSelectedCategoriesInCreation}
         />}
     </>
   )
