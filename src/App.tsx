@@ -42,17 +42,7 @@ function App() {
       return cardsTemp;
     }
   });
-  const [selectedCategories, setSelectedCategories] = useState(() => {
-    let localStorageSelected : string | null = localStorage.getItem('selected-categories');
-    if (!localStorageSelected){
-      return [];
-    }
-    else {
-      let categoriesTemp: Array<string> = JSON.parse(localStorageSelected);
-      if (!categoriesTemp || categoriesTemp.length === 0) return [];
-      return categoriesTemp;
-    }
-  });
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   return (
     <>

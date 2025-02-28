@@ -1,6 +1,7 @@
 import Category from '../Category/Category';
 import CategoryType from '../../types/Category';
 import './Categories.scss'
+import {useState, useEffect} from 'react'
 
 interface CategoriesProps {
   categories: Array<CategoryType>;
@@ -41,13 +42,25 @@ const Categories: React.FC<CategoriesProps> = ({
     setIsModalCardShown(true);
     setIsModalCardEditing(false);
   }
+  const handleAllClick = function(): void {
+    if (setSelectedCategories) setSelectedCategories([]);
+  }
+  const [active, setActive] = useState(true);
+  useEffect(() => {
+    if (selectedCategories) setActive(selectedCategories.length <= 0);
+  }, [selectedCategories]);
+  const getStyleIfActive = () => {
+    if (active) return '';
+    return'-outline';
+  };
 
   return (
     <div className='category-menu'>
       <button className='btn btn-primary category-add-btn'
               onClick={handleNewCategory}>New Category...</button>
       <div className="categories">
-        <Category id={'All'} usable={true} name='All'/>
+        <button className={`category btn btn${getStyleIfActive()}-dark`}
+                onClick={handleAllClick}>All</button>
         {categories?.length
           ? categories.map((item, index) =>
           <Category

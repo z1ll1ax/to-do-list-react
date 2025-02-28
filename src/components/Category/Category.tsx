@@ -40,41 +40,23 @@ const Category:FC<CategoryType> = (
     const handleClick = () => {
         setActive(!active);
         if (usable) {
+            if (!selectedCategories || !setSelectedCategories) return;
             if (active) {
-                let categories = selectedCategories;
-                let sorted = categories?.filter((item) => item === id);
-                if (sorted && categories && sorted?.length !== 0) {
-                    categories = categories?.filter((item) => item !== id);
-                    if (setSelectedCategories) setSelectedCategories(categories);
-                }
-            }
-            else {
-                let categories = selectedCategories;
-                let sorted = categories?.filter((item) => item === id);
-                if (categories && sorted?.length === 0) {
-                    categories?.push(id);
-                    if (setSelectedCategories) setSelectedCategories(categories);
-                }
+                const updatedCategories = selectedCategories.filter((item) => item !== id);
+                setSelectedCategories(updatedCategories);
+            } else {
+                const updatedCategories = [...selectedCategories, id];
+                setSelectedCategories(updatedCategories);
             }
         }
         else if (usableForCreation) {
+            if (!selectedCategoriesInCreation || !setSelectedCategoriesInCreation) return;
             if (active) {
-                let categories = selectedCategoriesInCreation;
-                let sorted = categories?.filter((item) => item === id);
-                if (sorted && categories && sorted?.length !== 0) {
-                    categories = categories?.filter((item) => item !== id);
-                    if (setSelectedCategoriesInCreation) setSelectedCategoriesInCreation(categories);
-                    console.log(categories);
-                }
-            }
-            else {
-                let categories = selectedCategoriesInCreation;
-                let sorted = categories?.filter((item) => item === id);
-                if (categories && sorted?.length === 0) {
-                    categories?.push(id);
-                    if (setSelectedCategoriesInCreation) setSelectedCategoriesInCreation(categories);
-                    console.log(categories);
-                }
+                const updatedCategories = selectedCategoriesInCreation.filter((item) => item !== id);
+                setSelectedCategoriesInCreation(updatedCategories);
+            } else {
+                const updatedCategories = [...selectedCategoriesInCreation, id];
+                setSelectedCategoriesInCreation(updatedCategories);
             }
         }
     }

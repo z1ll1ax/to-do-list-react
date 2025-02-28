@@ -16,6 +16,15 @@ const Cards:React.FC<CardsContainerProps> = (
         setSelectedCategories,
     }
 ) => {
+    
+    const selectedCards = () => {
+        if (!selectedCategories || selectedCategories.length === 0) return cards;
+        const filteredCards = cards.filter((card) =>
+            selectedCategories.every((category) => card.categories?.includes(category))
+        );
+        return filteredCards;
+    }
+
     const getCategories = (card: CardsProps) => {
         let localStorageCategories : string | null = localStorage.getItem('categories');
         let categories: Array<CategoryType>;
@@ -30,17 +39,14 @@ const Cards:React.FC<CardsContainerProps> = (
                     arr.push(category.id);
                 }
             })
-            console.log(arr);
             return arr;
         }
-
-            // let card = cards.filter((item) => item.categories?.includes(id));
     }
-
+    const filteredCards = selectedCards();
     return (
         <div className="cards">
-            {cards?.length
-                ? cards.map((item, index) =>
+            {filteredCards?.length
+                ? filteredCards.map((item, index) =>
                 <Card
                     key={index}
                     title={item.title}
