@@ -4,7 +4,7 @@ import CategoryType from '../../types/Category';
 import Category from '../../components/Category/Category';
 import './Modals.scss';
 
-interface CardsProps {
+interface ModalCardProps {
     categories: Array<CategoryType>;
     setCards: React.Dispatch<React.SetStateAction<CardProps[]>>;
     isModalCardEditing: boolean;
@@ -17,9 +17,10 @@ interface CardsProps {
     setInputTextAreaName: React.Dispatch<React.SetStateAction<string>>;
     selectedCategoriesInCreation: string[];
     setSelectedCategoriesInCreation: React.Dispatch<React.SetStateAction<string[]>>;
+    redactId: string;
 }
 
-const ModalCard: React.FC<CardsProps> = (
+const ModalCard: React.FC<ModalCardProps> = (
     { 
         categories,
         setCards,
@@ -32,7 +33,8 @@ const ModalCard: React.FC<CardsProps> = (
         inputTextAreaName,
         setInputTextAreaName,
         selectedCategoriesInCreation,
-        setSelectedCategoriesInCreation
+        setSelectedCategoriesInCreation,
+        redactId
     }) => {
     const getTodayDateFormatted = function(): string {
         const today = new Date();
@@ -50,9 +52,11 @@ const ModalCard: React.FC<CardsProps> = (
     }
     const handleClose = function() : void{
         setIsModalShown(false);
+        clearInputs();
     }
     const handleDiscard = function() : void{
         setIsModalShown(false);
+        clearInputs();
     }
     const handleSave = function() : void{
         let localStorageCards : string | null = localStorage.getItem('cards');
@@ -76,42 +80,60 @@ const ModalCard: React.FC<CardsProps> = (
         localStorage.setItem('cards', JSON.stringify(cards));
         if (setCards) setCards(cards);
         setIsModalShown(false);
+        clearInputs();
     }
     const handleDelete = function(): void {
-        // if (redactId === '-1') return;
-        // let localStorageCategories : string | null = localStorage.getItem('categories');
-        // if (!localStorageCategories){
-        //     return;
-        // }
-        // let categories: Array<CategoryType>;
-        // categories = JSON.parse(localStorageCategories);
-        // categories = categories.filter(category => category.id !== redactId);
-        // localStorage.setItem('categories', JSON.stringify(categories));
-        // if (setCategories) setCategories(categories);
-        // setIsModalShown(false);
+        if (redactId === '-1') return;
+
+        let localStorageCards : string | null = localStorage.getItem('cards');
+        if (!localStorageCards){
+            return;
+        }
+        let cards: Array<CardProps>;
+        cards = JSON.parse(localStorageCards);
+        cards = cards.filter(card => card.id !== redactId);
+        localStorage.setItem('cards', JSON.stringify(cards));
+        if (setCards) setCards(cards);
+        setIsModalShown(false);
+        clearInputs();
     }
     const handleSaveEditing = function(): void {
-        // if (redactId === '-1') return;
-        // let localStorageCategories : string | null = localStorage.getItem('categories');
-        // let categories: Array<CategoryType>;
-        // if (!localStorageCategories){
-        //     categories = [];
-        // }
-        // else {
-        //     categories = JSON.parse(localStorageCategories);
-        // }
-        // const updatedCategories: Array<CategoryType> = categories.map((category) => {
-        //     if (category.id === redactId) {
-        //         return { ...category, name: inputName, color: colorChosen };
-        //     }
-        //     return category;
-        //     });
-        // localStorage.setItem('categories', JSON.stringify(updatedCategories));
-        // if (setCategories) setCategories(updatedCategories);
-        // setIsModalShown(false);
+        if (redactId === '-1') return;
+
+        let localStorageCards : string | null = localStorage.getItem('cards');
+        let cards: Array<CardProps>;
+        if (!localStorageCards){
+            cards = [];
+        }
+        else {
+            cards = JSON.parse(localStorageCards);
+        }
+        const updatedCards: Array<CardProps> = cards.map((card) => {
+            if (card.id === redactId) {
+                console.log(card.id);
+                console.log(redactId);
+                return { ...card,
+                    title: inputName, 
+                    description: inputTextAreaName, 
+                    deadlineDate: getDeadlineDateFormatted(inputDeadlineName),
+                    categories: selectedCategoriesInCreation,
+                };
+            }
+            return card;
+        });
+        localStorage.setItem('cards', JSON.stringify(updatedCards));
+        if (setCards) setCards(updatedCards);
+        setIsModalShown(false);
+        clearInputs();
+    }
+    const clearInputs = function(): void {
+        setInputName('');
+        setInputDeadlineName('');
+        setInputTextAreaName('');
+        setSelectedCategoriesInCreation([]);
     }
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputName(event.target.value.slice(0, 20));
+        setInputName(event.target.value.slice(0, 50));
     };
     const handleInputTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputTextAreaName(event.target.value);
@@ -170,9 +192,6 @@ const ModalCard: React.FC<CardsProps> = (
                         ></Category>)
                         : null}
                     </div>
-                    {/* <div>
-                       <p className='color-label'>Color chosen: <CategoryInfo name={inputName ? inputName : 'Your category name'} color={colorChosen} isBigSize={true}></CategoryInfo></p>
-                    </div> */}
                 </div>
                 <div className="modal-footer">
                     {
@@ -181,7 +200,7 @@ const ModalCard: React.FC<CardsProps> = (
                         <button type="button"
                             className="btn btn-danger"
                             data-bs-dismiss="modal"
-                            onClick={handleDelete}>Delete category</button>
+                            onClick={handleDelete}>Delete card</button>
                         <button type="button"
                             className="btn btn-primary"
                             onClick={handleSaveEditing}>Save changes</button>

@@ -6,14 +6,26 @@ import './Cards.scss'
 interface CardsContainerProps {
     cards: CardsProps[];
     selectedCategories?: string[];
-    setSelectedCategories?: React.Dispatch<React.SetStateAction<string[]>>;
+    setIsModalShown?: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsModalCardEditing?: React.Dispatch<React.SetStateAction<boolean>>;
+    setInputCardTitle?: React.Dispatch<React.SetStateAction<string>>;
+    setInputCardDescription?: React.Dispatch<React.SetStateAction<string>>;
+    setInputCardDeadlineDate?: React.Dispatch<React.SetStateAction<string>>;
+    setInputCardCategories?: React.Dispatch<React.SetStateAction<string[]>>;
+    setRedactId?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Cards:React.FC<CardsContainerProps> = (
     {
         cards,
         selectedCategories,
-        setSelectedCategories,
+        setIsModalCardEditing,
+        setIsModalShown,
+        setInputCardTitle,
+        setInputCardDescription,
+        setInputCardDeadlineDate,
+        setInputCardCategories,
+        setRedactId
     }
 ) => {
     
@@ -49,11 +61,19 @@ const Cards:React.FC<CardsContainerProps> = (
                 ? filteredCards.map((item, index) =>
                 <Card
                     key={index}
+                    id={item.id}
                     title={item.title}
                     description={item.description}
                     createDate={item.createDate}
                     deadlineDate={item.deadlineDate}
                     categories={getCategories(item)}
+                    setIsModalCardEditing={setIsModalCardEditing}
+                    setIsModalShown={setIsModalShown}
+                    setInputCardTitle={setInputCardTitle}
+                    setInputCardDescription={setInputCardDescription}
+                    setInputCardDeadlineDate={setInputCardDeadlineDate}
+                    setInputCardCategories={setInputCardCategories}
+                    setRedactId={setRedactId}
                 ></Card>)
                 : null}
         </div>

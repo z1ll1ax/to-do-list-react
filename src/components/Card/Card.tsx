@@ -3,14 +3,23 @@ import {FC} from 'react'
 import CardProps from '../../interfaces/CardProps';
 import CategoryInfo from '../Category/CategoryInfo';
 import CategoryType from '../../types/Category';
+import ThreeDots from '../../assets/three_dots.svg';
 
 const Card:FC<CardProps> = (
     {
+        id,
         title,
         description,
         createDate,
         deadlineDate,
         categories,
+        setIsModalCardEditing,
+        setIsModalShown,
+        setInputCardTitle,
+        setInputCardDescription,
+        setInputCardDeadlineDate,
+        setInputCardCategories,
+        setRedactId
     }
 ) => {
     const getRenderCategories = () => {
@@ -30,8 +39,28 @@ const Card:FC<CardProps> = (
             return arr;
         }
     }
+    const formatDate = (date: string) => {
+        const newDate = date.split('.');
+        return `${newDate[2]}-${newDate[1]}-${newDate[0]}`;
+    }
+    const handleEditButton = () => {
+        if (!setIsModalCardEditing || !setIsModalShown) return;
+        setIsModalCardEditing(true);
+        setIsModalShown(true);
+        if (setInputCardTitle && title) setInputCardTitle(title);
+        if (setInputCardDescription && description) setInputCardDescription(description);
+        if (setInputCardDeadlineDate && deadlineDate) setInputCardDeadlineDate(formatDate(deadlineDate));
+        if (setInputCardCategories && categories) setInputCardCategories(categories);
+        if(setRedactId) {
+            setRedactId(id);
+        }
+    }
     return (
         <div className="card text-bg-light">
+            <button className='card-settings'
+                onClick={handleEditButton}>
+                <img src={ThreeDots} alt='Settings'></img>
+            </button>
             <h5 className="card-title">{title}</h5>
             <p className="card-text card-description">{description}</p>
             <div className='card-footer'>

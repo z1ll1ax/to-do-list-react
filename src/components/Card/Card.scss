@@ -4,6 +4,7 @@ $card-width: 27rem;
 $card-description-line-count-shown: 7;
 
 .card {
+    position: relative;
     max-width: $card-width;
     align-self: flex-start;
     margin: 0 auto;
@@ -69,4 +70,18 @@ $card-description-line-count-shown: 7;
     flex-direction: column;
     justify-content: end;
     text-align: right;
+}
+
+.card-settings {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    display: none;
+}
+
+.card:hover {
+    .card-settings {
+        display: block;
+    }
 }

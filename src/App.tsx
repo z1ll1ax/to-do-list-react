@@ -5,21 +5,32 @@ import SearchBar from "./components/SearchBar/SearchBar"
 import CategoryType from "./types/Category";
 import ModalCard from "./components/Modals/ModalCard"
 import ModalCategory from "./components/Modals/ModalCategory"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import CardProps from "./interfaces/CardProps";
+
+//TODO: search bar
+//TODO: adaptive layout update
+//TODO: empty fields checking
+//TODO: fix bug with all
+//TODO: lastEditedDate for cards
 
 function App() {
   const [categoryColorChosen, setCategoryColorChosen] = useState('Red');
   const [inputCategoryName, setInputCategoryName] = useState('');
   const [isModalCategoryShown, setIsModalCategoryShown] = useState(false);
   const [isModalCategoryEditing, setIsModalCategoryEditing] = useState(false);
+  const [categoryRedactId, setCategoryRedactId] = useState('-1');
+
   const [isModalCardShown, setIsModalCardShown] = useState(false);
   const [isModalCardEditing, setIsModalCardEditing] = useState(false);
-  const [inputCardName, setInputCardName] = useState('');
-  const [inputCardTextAreaName, setInputCardTextAreaName] = useState('');
-  const [inputCardDeadlineName, setInputCardDeadlineName] = useState('');
-  const [redactId, setRedactId] = useState('-1');
-  const [selectedCategoriesInCreation, setSelectedCategoriesInCreation] = useState(Array());
+  const [inputCardTitle, setInputCardTitle] = useState('');
+  const [inputCardDescriprtion, setInputCardDescription] = useState('');
+  const [inputCardDeadlineDate, setInputCardDeadlineName] = useState('');
+  const [cardRedactId, setCardRedactId] = useState('-1');
+
+  const [selectedCategoriesInCreation, setSelectedCategoriesInCreation] = useState<string[]>(Array());
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
   const [categories, setCategories] = useState(() => {
     let localStorageCategories : string | null = localStorage.getItem('categories');
     if (!localStorageCategories){
@@ -42,7 +53,6 @@ function App() {
       return cardsTemp;
     }
   });
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   return (
     <>
@@ -55,19 +65,25 @@ function App() {
         setIsModalCardEditing = {setIsModalCardEditing}
         setCategoryColorChosen = {setCategoryColorChosen}
         setInputCategoryName = {setInputCategoryName}
-        setRedactId = {setRedactId}
+        setRedactId = {setCategoryRedactId}
         selectedCategories = {selectedCategories}
         setSelectedCategories = {setSelectedCategories}
       />
       <Cards
         cards={cards}
         selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
+        setIsModalCardEditing={setIsModalCardEditing}
+        setIsModalShown={setIsModalCardShown}
+        setInputCardTitle={setInputCardTitle}
+        setInputCardDescription={setInputCardDescription}
+        setInputCardDeadlineDate={setInputCardDeadlineName}
+        setInputCardCategories={setSelectedCategoriesInCreation}
+        setRedactId={setCardRedactId}
       />
       {isModalCategoryShown && !isModalCardShown &&
         <ModalCategory
           setCategories = {setCategories}
-          redactId = {redactId}
+          redactId = {categoryRedactId}
           colorChosen = {categoryColorChosen}
           setColorChosen = {setCategoryColorChosen}
           inputName = {inputCategoryName}
@@ -81,26 +97,18 @@ function App() {
           setCards = {setCards}
           isModalCardEditing = {isModalCardEditing}
           setIsModalShown = {setIsModalCardShown}
-          inputName = {inputCardName}
-          setInputName = {setInputCardName}
-          inputDeadlineName = {inputCardDeadlineName}
+          inputName = {inputCardTitle}
+          setInputName = {setInputCardTitle}
+          inputDeadlineName = {inputCardDeadlineDate}
           setInputDeadlineName = {setInputCardDeadlineName}
-          inputTextAreaName = {inputCardTextAreaName}
-          setInputTextAreaName = {setInputCardTextAreaName}
+          inputTextAreaName = {inputCardDescriprtion}
+          setInputTextAreaName = {setInputCardDescription}
           selectedCategoriesInCreation = {selectedCategoriesInCreation}
           setSelectedCategoriesInCreation = {setSelectedCategoriesInCreation}
+          redactId={cardRedactId}
         />}
     </>
   )
 }
 
 export default App
-
-//TODO: update categories in live time
-//TODO: card modal
-//TODO: card create button
-//TODO: card edit/delete modal
-//TODO: edit/delete categories
-//TODO: search bar
-//TODO: adaptive layout update
-//TODO: empty fields checking
