@@ -1,6 +1,7 @@
 import './Modals.scss';
 import CategoryInfo from '../Category/CategoryInfo';
 import CategoryType from '../../types/Category';
+import { useState } from "react"
 
 interface CategoriesProps {
     setCategories: React.Dispatch<React.SetStateAction<CategoryType[]>>;
@@ -13,7 +14,7 @@ interface CategoriesProps {
     setIsModalShown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalCard: React.FC<CategoriesProps> = (
+const ModalCategory: React.FC<CategoriesProps> = (
     { 
         setCategories,
         redactId,
@@ -35,6 +36,11 @@ const ModalCard: React.FC<CategoriesProps> = (
         setIsModalShown(false);
     }
     const handleSave = function() : void{
+        if (!inputName.trim()) {
+            setError('Category name cannot be empty');
+            return;
+        }
+        setError(null);
         let localStorageCategories : string | null = localStorage.getItem('categories');
         let categories: Array<CategoryType>;
         if (!localStorageCategories){
@@ -65,6 +71,11 @@ const ModalCard: React.FC<CategoriesProps> = (
     }
     const handleSaveEditing = function(): void {
         if (redactId === '-1') return;
+        if (!inputName.trim()) {
+            setError('Category name cannot be empty');
+            return;
+        }
+        setError(null);
         let localStorageCategories : string | null = localStorage.getItem('categories');
         let categories: Array<CategoryType>;
         if (!localStorageCategories){
@@ -83,6 +94,7 @@ const ModalCard: React.FC<CategoriesProps> = (
         if (setCategories) setCategories(updatedCategories);
         setIsModalShown(false);
     }
+    const [error, setError] = useState<string | null>(null);
     return (
         <div className="modal modal-dialog-centered" tabIndex={-1}>
             <div className="modal-dialog">
@@ -96,7 +108,7 @@ const ModalCard: React.FC<CategoriesProps> = (
                             onClick={handleClose}></button>
                 </div>
                 <div className="modal-body">
-                    <div className="input-group input-group-sm mb-3 input-container">
+                    <div className="input-group input-group-sm mb-3 input-container name-category">
                         <span className="input-group-text" id="inputGroup-sizing-sm">Category Name</span>
                         <input type='text'
                                 placeholder='Enter category name'
@@ -104,6 +116,13 @@ const ModalCard: React.FC<CategoriesProps> = (
                                 value={inputName}
                                 onChange={handleInputChange}></input>
                     </div>
+                    {
+                        error
+                        ? <div className="alert alert-danger">{error}</div>
+                        : !inputName.trim()
+                            ? <div className="alert alert-warning">{'Please fill name field'}</div>
+                            : <div className="alert alert-success">{'Cool name!'}</div>
+                    }
                     <div className="btn-group" role="group" aria-label="Choose color">
                         <button type="button"
                                 className="btn btn-danger"
@@ -156,10 +175,10 @@ const ModalCard: React.FC<CategoriesProps> = (
                     </>
                     }
                 </div>
-                </div>
             </div>
         </div>
+    </div>
     )
 }
 
-export default ModalCard;
+export default ModalCategory;

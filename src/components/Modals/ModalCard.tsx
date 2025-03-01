@@ -3,6 +3,7 @@ import CardType from '../Card/Card';
 import CategoryType from '../../types/Category';
 import Category from '../../components/Category/Category';
 import './Modals.scss';
+import { useState } from "react"
 
 interface ModalCardProps {
     categories: Array<CategoryType>;
@@ -52,13 +53,15 @@ const ModalCard: React.FC<ModalCardProps> = (
     }
     const handleClose = function() : void{
         setIsModalShown(false);
-        clearInputs();
     }
     const handleDiscard = function() : void{
         setIsModalShown(false);
         clearInputs();
     }
     const handleSave = function() : void{
+        if (!validateInputs()) {
+            return;
+        }
         let localStorageCards : string | null = localStorage.getItem('cards');
         let cards: Array<CardProps>;
         if (!localStorageCards){
@@ -82,6 +85,30 @@ const ModalCard: React.FC<ModalCardProps> = (
         setIsModalShown(false);
         clearInputs();
     }
+    const isDateBeforeToday = (dateString: string): boolean => {
+        const inputDate = new Date(dateString);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return inputDate < today;
+    };
+    const validateInputs = () => {
+        const errors: string[] = [];
+        if (!inputName.trim()) {
+          errors.push('Title');
+        }
+        if (!inputTextAreaName.trim()) {
+          errors.push('Description');
+        }
+        if (!inputDeadlineName.trim() || isDateBeforeToday(inputDeadlineName)) {
+          errors.push('Deadline Date');
+        }
+        if (errors.length > 0) {
+          setError(`${errors.join(', ')}`);
+          return false;
+        }
+        setError(null);
+        return true;
+      };
     const handleDelete = function(): void {
         if (redactId === '-1') return;
 
@@ -98,8 +125,7 @@ const ModalCard: React.FC<ModalCardProps> = (
         clearInputs();
     }
     const handleSaveEditing = function(): void {
-        if (redactId === '-1') return;
-
+        if (!validateInputs() || redactId === '-1') return;
         let localStorageCards : string | null = localStorage.getItem('cards');
         let cards: Array<CardProps>;
         if (!localStorageCards){
@@ -141,6 +167,7 @@ const ModalCard: React.FC<ModalCardProps> = (
     const handleInputDeadlineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputDeadlineName(event.target.value);
     };
+    const [error, setError] = useState<string | null>(null);
     return (
         <div className="modal modal-dialog-centered" tabIndex={-1}>
             <div className="modal-dialog">
@@ -193,6 +220,16 @@ const ModalCard: React.FC<ModalCardProps> = (
                         : null}
                     </div>
                 </div>
+                {
+                    error
+                        ? <div className="alert alert-danger">These fields are empty or incorrect:<br/>{error}</div>
+                        : (!inputName.trim() || !inputDeadlineName.trim() || !inputTextAreaName.trim())
+                            ? <div className="alert alert-warning">
+                                Please fill name, description, deadline date.<br/>
+                                Categories are optional.
+                            </div>
+                            : <div className="alert alert-success">Awesome task!<br/>Good luck with this!</div>
+                }
                 <div className="modal-footer">
                     {
                     isModalCardEditing

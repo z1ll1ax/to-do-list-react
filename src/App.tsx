@@ -10,9 +10,10 @@ import CardProps from "./interfaces/CardProps";
 
 //TODO: search bar
 //TODO: adaptive layout update
-//TODO: empty fields checking
 //TODO: fix bug with all
 //TODO: lastEditedDate for cards
+//TODO: Enter and Escape listeners
+//TODO: when category is deleted and any card have that category, delete category from this card
 
 function App() {
   const [categoryColorChosen, setCategoryColorChosen] = useState('Red');
