@@ -8,7 +8,6 @@ import ModalCategory from "./components/Modals/ModalCategory"
 import { useState } from "react"
 import CardProps from "./interfaces/CardProps";
 
-//TODO: search bar
 //TODO: adaptive layout update
 //TODO: fix bug with all
 //TODO: lastEditedDate for cards
@@ -54,9 +53,14 @@ function App() {
     }
   });
 
+  const [searchBarValue, setSearchBarValue] = useState<string>('');
+
   return (
     <>
-      <SearchBar/>
+      <SearchBar
+        searchBarValue = {searchBarValue}
+        setSearchBarValue = {setSearchBarValue}
+      />
       <Categories
         categories={categories}
         setIsModalCategoryShown = {setIsModalCategoryShown}
@@ -79,6 +83,7 @@ function App() {
         setInputCardDeadlineDate={setInputCardDeadlineName}
         setInputCardCategories={setSelectedCategoriesInCreation}
         setRedactId={setCardRedactId}
+        searchBarValue={searchBarValue}
       />
       {isModalCategoryShown && !isModalCardShown &&
         <ModalCategory

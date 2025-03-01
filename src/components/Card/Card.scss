@@ -37,6 +37,7 @@ $card-description-line-count-shown: 7;
     margin: 0.75rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    line-clamp: $card-description-line-count-shown;
     -webkit-line-clamp: $card-description-line-count-shown;
     overflow: hidden;
     text-overflow: ellipsis;

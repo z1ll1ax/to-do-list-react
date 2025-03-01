@@ -13,6 +13,7 @@ interface CardsContainerProps {
     setInputCardDeadlineDate?: React.Dispatch<React.SetStateAction<string>>;
     setInputCardCategories?: React.Dispatch<React.SetStateAction<string[]>>;
     setRedactId?: React.Dispatch<React.SetStateAction<string>>;
+    searchBarValue: string;
 }
 
 const Cards:React.FC<CardsContainerProps> = (
@@ -25,18 +26,29 @@ const Cards:React.FC<CardsContainerProps> = (
         setInputCardDescription,
         setInputCardDeadlineDate,
         setInputCardCategories,
-        setRedactId
+        setRedactId,
+        searchBarValue,
     }
 ) => {
-    
     const selectedCards = () => {
-        if (!selectedCategories || selectedCategories.length === 0) return cards;
-        const filteredCards = cards.filter((card) =>
-            selectedCategories.every((category) => card.categories?.includes(category))
-        );
+        let filteredCards = cards;
+        if (selectedCategories && selectedCategories.length > 0) {
+            filteredCards = cards.filter((card) =>
+                selectedCategories.every((category) => card.categories?.includes(category))
+            );
+        }
+        if (searchBarValue) {
+            filteredCards = filteredCards.filter((card) => {
+                const matches =
+                    card.title?.toLowerCase().includes(searchBarValue.toLowerCase()) ||
+                    card.description?.toLowerCase().includes(searchBarValue.toLowerCase()) ||
+                    card.deadlineDate?.toLowerCase().includes(searchBarValue.toLowerCase());
+                return matches;
+            });
+        }
         return filteredCards;
-    }
-
+    };
+  
     const getCategories = (card: CardsProps) => {
         let localStorageCategories : string | null = localStorage.getItem('categories');
         let categories: Array<CategoryType>;

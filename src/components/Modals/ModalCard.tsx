@@ -1,5 +1,4 @@
 import CardProps from '../../interfaces/CardProps';
-import CardType from '../Card/Card';
 import CategoryType from '../../types/Category';
 import Category from '../../components/Category/Category';
 import './Modals.scss';
@@ -136,8 +135,6 @@ const ModalCard: React.FC<ModalCardProps> = (
         }
         const updatedCards: Array<CardProps> = cards.map((card) => {
             if (card.id === redactId) {
-                console.log(card.id);
-                console.log(redactId);
                 return { ...card,
                     title: inputName, 
                     description: inputTextAreaName, 
