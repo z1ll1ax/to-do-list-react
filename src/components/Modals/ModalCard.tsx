@@ -3,7 +3,7 @@ import CardType from '../Card/Card';
 import CategoryType from '../../types/Category';
 import Category from '../../components/Category/Category';
 import './Modals.scss';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface ModalCardProps {
     categories: Array<CategoryType>;
@@ -168,6 +168,25 @@ const ModalCard: React.FC<ModalCardProps> = (
         setInputDeadlineName(event.target.value);
     };
     const [error, setError] = useState<string | null>(null);
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            if (isModalCardEditing) {
+                handleSaveEditing();
+            }
+            else {
+                handleSave();
+            }
+        } else if (event.key === 'Escape') {
+          handleClose();
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+          document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [handleSaveEditing, handleSave, handleDiscard]);
     return (
         <div className="modal modal-dialog-centered" tabIndex={-1}>
             <div className="modal-dialog">
