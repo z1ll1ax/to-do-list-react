@@ -1,13 +1,14 @@
 @import '../../Global.scss';
 
-$card-width: 27rem;
+:root {
+    --card-width: 27rem;
+}
 $card-description-line-count-shown: 7;
 
 .card {
     position: relative;
-    max-width: $card-width;
+    max-width: --card-width;
     align-self: flex-start;
-    margin: 0 auto;
     font-family: $primary-font;
     background-image: url('../../assets/bg.jpg');
     background-size: cover;
@@ -20,7 +21,7 @@ $card-description-line-count-shown: 7;
 }
 
 .card-title {
-    width: calc($card-width - 1.5rem);
+    width: calc(--card-width - 1.5rem);
     margin: 1rem 0.75rem 0 0.75rem;
     max-height: 1.5rem;
     white-space: nowrap;
@@ -33,7 +34,7 @@ $card-description-line-count-shown: 7;
 }
 
 .card-description {
-    width: calc($card-width - 1.5rem);
+    width: calc(--card-width - 1.5rem);
     margin: 0.75rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -84,5 +85,20 @@ $card-description-line-count-shown: 7;
 .card:hover {
     .card-settings {
         display: block;
+    }
+}
+
+@media (max-width: 48rem) {
+    .card-description {
+        font-size: 0.75rem;
+    }
+    .category-card {
+        font-size: 0.65rem;
+    }
+    .card-settings {
+        display: block;
+    }
+    .card-text {
+        font-size: 0.75rem;
     }
 }

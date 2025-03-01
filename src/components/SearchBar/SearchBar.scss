@@ -28,17 +28,11 @@ $search-btn-width: 2.5rem;
     height: $search-btn-width;
     background: none;
     border: none;
-    &__pic {
-
-    }
 }
 
 .input-clear {
     position: absolute;
     right: calc($search-btn-width - 1rem);
-    &__pic {
-        
-    }
 }
 
 @media (max-width: 30rem) {

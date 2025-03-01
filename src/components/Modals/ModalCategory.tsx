@@ -142,29 +142,29 @@ const ModalCategory: React.FC<CategoriesProps> = (
                             ? <div className="alert alert-warning">{'Please fill name field'}</div>
                             : <div className="alert alert-success">{'Cool name!'}</div>
                     }
-                    <div className="btn-group" role="group" aria-label="Choose color">
+                    <div className="btn-group category-group" role="group" aria-label="Choose color">
                         <button type="button"
-                                className="btn btn-danger"
+                                className="category btn btn-danger"
                                 onClick={function(){setColorChosen('Red')}}>Red</button>
                         <button
                                 type="button"
-                                className="btn btn-warning"
+                                className="category btn btn-warning"
                                 onClick={function(){setColorChosen('Yellow')}}>Yellow</button>
                         <button
                                 type="button"
-                                className="btn btn-success"
+                                className="category btn btn-success"
                                 onClick={function(){setColorChosen('Green')}}>Green</button>
                         <button
                                 type="button"
-                                className="btn btn-info"
+                                className="category btn btn-info"
                                 onClick={function(){setColorChosen('Light Blue')}}>Light Blue</button>
                         <button
                                 type="button"
-                                className="btn btn-primary"
+                                className="category btn btn-primary"
                                 onClick={function(){setColorChosen('Blue')}}>Blue</button>
                         <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="category btn btn-secondary"
                                 onClick={function(){setColorChosen('Gray')}}>Gray</button>
                     </div>
                     <div>

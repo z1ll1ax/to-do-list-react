@@ -1,20 +1,16 @@
 import './Category.scss'
 
 interface CategoryInfoProps {
-    id?: string;
     name?: string;
     color?: string;
     isBigSize?: boolean;
-    isClickable?: boolean;
 }
 
 const CategoryInfo: React.FC<CategoryInfoProps> = (
     {
-        id,
         name,
         color,
         isBigSize,
-        isClickable
     }
 ) => {
   const getClassFromColor = () => {

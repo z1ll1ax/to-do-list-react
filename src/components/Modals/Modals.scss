@@ -21,3 +21,24 @@
 .name-category {
     margin: 0;
 }
+
+@media (max-width: 48rem) {
+    .modal-dialog {
+        justify-content: center;
+    }
+    .modal-header {
+        padding: 0.25rem 1rem;
+    }
+    .input-container {
+        margin: 0.25rem 0;
+    }
+    .alert {
+        font-size: 0.75rem;
+    }
+    .category-group {
+        margin: 0;
+    }
+    .category {
+        font-size: 0.75rem;
+    }
+}

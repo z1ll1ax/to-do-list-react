@@ -42,6 +42,7 @@ const Cards:React.FC<CardsContainerProps> = (
                 const matches =
                     card.title?.toLowerCase().includes(searchBarValue.toLowerCase()) ||
                     card.description?.toLowerCase().includes(searchBarValue.toLowerCase()) ||
+                    card.createDate?.toLowerCase().includes(searchBarValue.toLowerCase()) ||
                     card.deadlineDate?.toLowerCase().includes(searchBarValue.toLowerCase());
                 return matches;
             });
