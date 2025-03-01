@@ -1,5 +1,5 @@
 import './Category.scss'
-import {FC, useState} from 'react'
+import {FC} from 'react'
 import CategoryType from '../../types/Category';
 
 const Category:FC<CategoryType> = (
@@ -17,31 +17,32 @@ const Category:FC<CategoryType> = (
         selectedCategories,
         setSelectedCategories,
         selectedCategoriesInCreation,
-        setSelectedCategoriesInCreation
+        setSelectedCategoriesInCreation,
+        isActive
     }
 ) => {
-    const [active, setActive] = useState(() => {
-        if (setSelectedCategories) {
-            let categories = selectedCategories;
-            let sorted = categories?.filter((item) => item === id);
-            if (sorted && categories && sorted?.length !== 0) {
-                return true;
-            }
-        }
-        else if (setSelectedCategoriesInCreation) {
-            let categories = selectedCategoriesInCreation;
-            let sorted = categories?.filter((item) => item === id);
-            if (sorted && categories && sorted?.length !== 0) {
-                return true;
-            }
-        }
-        else return false;
-    });
+    // const [active, setActive] = useState(() => {
+    //     if (setSelectedCategories) {
+    //         let categories = selectedCategories;
+    //         let sorted = categories?.filter((item) => item === id);
+    //         if (sorted && categories && sorted?.length !== 0) {
+    //             return true;
+    //         }
+    //     }
+    //     else if (setSelectedCategoriesInCreation) {
+    //         let categories = selectedCategoriesInCreation;
+    //         let sorted = categories?.filter((item) => item === id);
+    //         if (sorted && categories && sorted?.length !== 0) {
+    //             return true;
+    //         }
+    //     }
+    //     else return false;
+    // });
     const handleClick = () => {
-        setActive(!active);
+        //setActive(!active);
         if (usable) {
             if (!selectedCategories || !setSelectedCategories) return;
-            if (active) {
+            if (isActive) {
                 const updatedCategories = selectedCategories.filter((item) => item !== id);
                 setSelectedCategories(updatedCategories);
             } else {
@@ -51,7 +52,7 @@ const Category:FC<CategoryType> = (
         }
         else if (usableForCreation) {
             if (!selectedCategoriesInCreation || !setSelectedCategoriesInCreation) return;
-            if (active) {
+            if (isActive) {
                 const updatedCategories = selectedCategoriesInCreation.filter((item) => item !== id);
                 setSelectedCategoriesInCreation(updatedCategories);
             } else {
@@ -73,7 +74,7 @@ const Category:FC<CategoryType> = (
     }
 
   const getStyleIfActive = () => {
-    if (active) return '';
+    if (isActive) return '';
     return'-outline';
   };
   const getClassFromColor = () => {

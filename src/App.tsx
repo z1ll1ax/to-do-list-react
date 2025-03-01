@@ -8,7 +8,6 @@ import ModalCategory from "./components/Modals/ModalCategory"
 import { useState } from "react"
 import CardProps from "./interfaces/CardProps";
 
-//TODO: fix bug with all
 //TODO: lastEditedDate for cards
 //TODO: when category is deleted and any card have that category, delete category from this card
 

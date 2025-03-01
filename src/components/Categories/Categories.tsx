@@ -76,6 +76,7 @@ const Categories: React.FC<CategoriesProps> = ({
             setRedactId = {setRedactId}
             selectedCategories = {selectedCategories}
             setSelectedCategories = {setSelectedCategories}
+            isActive={selectedCategories ? selectedCategories.includes(item.id) : false}
           ></Category>)
           : null}
       </div>

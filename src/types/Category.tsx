@@ -14,6 +14,7 @@ type Category =
     setSelectedCategories?: React.Dispatch<React.SetStateAction<string[]>>;
     selectedCategoriesInCreation?: string[];
     setSelectedCategoriesInCreation?: React.Dispatch<React.SetStateAction<string[]>>;
+    isActive?: boolean;
 }
 
 export default Category;

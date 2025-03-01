@@ -232,6 +232,7 @@ const ModalCard: React.FC<ModalCardProps> = (
                             usableForCreation={true}
                             selectedCategoriesInCreation={selectedCategoriesInCreation}
                             setSelectedCategoriesInCreation={setSelectedCategoriesInCreation}
+                            isActive={selectedCategoriesInCreation ? selectedCategoriesInCreation.includes(item.id) : false}
                         ></Category>)
                         : null}
                     </div>
